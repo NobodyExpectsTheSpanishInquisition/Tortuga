@@ -10,11 +10,13 @@ func main() {
 
 	if err != nil {
 		fmt.Printf(err.Error())
+		return
 	}
 
 	err = app.StartHttp()
 
 	if err != nil {
 		fmt.Printf(err.Error())
+		return
 	}
 }
