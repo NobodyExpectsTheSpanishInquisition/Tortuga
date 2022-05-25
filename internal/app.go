@@ -20,6 +20,12 @@ func BuildApp() (App, error) {
 
 	r := Infrastructure.CreateRouter()
 
+	_, err = Infrastructure.ConnectToDatabase()
+
+	if err != nil {
+		return App{}, nil
+	}
+
 	return App{r}, nil
 }
 
