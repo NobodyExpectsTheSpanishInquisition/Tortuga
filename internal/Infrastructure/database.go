@@ -21,3 +21,9 @@ func ConnectToDatabase() (*gorm.DB, error) {
 
 	return db, err
 }
+
+type User struct {
+	Id       string
+	Email    string
+	Password string
+}

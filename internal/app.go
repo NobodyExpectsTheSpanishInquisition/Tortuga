@@ -1,32 +1,36 @@
 package internal
 
 import (
-	"Tortuga/internal/Infrastructure"
+	. "Tortuga/internal/Infrastructure"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 )
 
 type App struct {
-	router *gin.Engine
+	router    *gin.Engine
+	container *Container
 }
 
 func BuildApp() (App, error) {
-	err := Infrastructure.ReadConfig()
+	err := ReadConfig()
 
 	if err != nil {
 		return App{}, err
 	}
 
-	r := Infrastructure.CreateRouter()
+	container := &Container{}
+	container.Init()
 
-	_, err = Infrastructure.ConnectToDatabase()
+	r := CreateRouter(container)
+
+	_, err = ConnectToDatabase()
 
 	if err != nil {
 		return App{}, nil
 	}
 
-	return App{r}, nil
+	return App{r, container}, nil
 }
 
 func (app *App) StartHttp() error {
